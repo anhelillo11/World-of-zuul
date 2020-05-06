@@ -47,12 +47,12 @@ public class Game
         rayos = new Room("in the rayos area");
 
         // initialise room exits
-        Outside.setExits(null, cafeteria, consultas, urgencias);
-        quirofano.setExits(urgencias, null, null, null);
-        urgencias.setExits(null, Outside, quirofano, null);
-        cafeteria.setExits(null, null, null, Outside);
-        consultas.setExits(Outside, null, rayos, null);
-        rayos.setExits(consultas, null, null, null);
+        Outside.setExits(null, cafeteria, consultas, urgencias, null);
+        quirofano.setExits(urgencias, null, null, null, rayos);
+        urgencias.setExits(null, Outside, quirofano, null, consultas);
+        cafeteria.setExits(null, null, null, Outside, null);
+        consultas.setExits(Outside, null, rayos, null, null);
+        rayos.setExits(consultas, null, null, null, null);
 
         currentRoom = Outside;  // start game outside
     }
@@ -160,6 +160,9 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if(direction.equals("southeast")) {
+            nextRoom = currentRoom.southeastExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -200,6 +203,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.southeastExit != null) {
+            System.out.print("southeast ");
         }
         System.out.println();
     }

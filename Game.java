@@ -47,12 +47,23 @@ public class Game
         rayos = new Room("in the rayos area");
 
         // initialise room exits
-        Outside.setExits(null, cafeteria, consultas, urgencias, null);
-        quirofano.setExits(urgencias, null, null, null, rayos);
-        urgencias.setExits(null, Outside, quirofano, null, consultas);
-        cafeteria.setExits(null, null, null, Outside, null);
-        consultas.setExits(Outside, null, rayos, null, null);
-        rayos.setExits(consultas, null, null, null, null);
+        Outside.setExit("east", cafeteria);
+        Outside.setExit("south", consultas);
+        Outside.setExit("west", urgencias);
+        
+        quirofano.setExit("north", urgencias);
+        quirofano.setExit("southwest", rayos);
+        
+        urgencias.setExit("east", Outside);
+        urgencias.setExit("south", quirofano);
+        urgencias.setExit("southeast", consultas);
+        
+        cafeteria.setExit("west", Outside);
+        
+        consultas.setExit("north", Outside);
+        consultas.setExit("south", rayos);
+        
+        rayos.setExit("north", consultas);
 
         currentRoom = Outside;  // start game outside
     }
@@ -147,23 +158,9 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if(direction.equals("southeast")) {
-            nextRoom = currentRoom.southeastExit;
-        }
 
+        Room nextRoom = currentRoom.getExit(direction);
+        
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
@@ -191,22 +188,8 @@ public class Game
 
     private void printLocationInfo() {
         System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exists: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        if(currentRoom.southeastExit != null) {
-            System.out.print("southeast ");
-        }
+        System.out.print(currentRoom.getExitString());
+        
         System.out.println();
     }
 }

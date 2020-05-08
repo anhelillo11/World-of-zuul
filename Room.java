@@ -128,7 +128,15 @@ public class Room
     * @param sala La sala que se encuentra en la direccion indicada
     */
     public void setExit(String direccion, Room sala) {
-    
-        
+        if(direccion.equals("east"))
+            eastExit = sala;
+        if(direccion.equals("north"))
+            northExit = sala;
+        if(direccion.equals("south"))
+            southExit = sala;
+        if(direccion.equals("west"))
+            westExit = sala;
+        if(direccion.equals("southwest"))
+            southeastExit = sala;
     }
 }

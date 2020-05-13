@@ -62,6 +62,8 @@ public class Game
         
         consultas.setExit("north", Outside);
         consultas.setExit("south", rayos);
+        consultas.setExit("izquierda", quirofano);
+        consultas.setExit("noroeste", cafeteria);
         
         rayos.setExit("north", consultas);
 
